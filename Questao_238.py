@@ -1,6 +1,6 @@
-#coding:utf-8
-import random as rn
+Questao_25.py
 
+#coding:utf-8
 '''
  Um polígrafo (detector de mentiras) é um aparelho que mede usualmente três sinais fisiológicos de uma pessoa:
     atividade respiratória;
@@ -21,3 +21,45 @@ está mentindo, qual a probabilidade de ser o culpado.
 b) se o polígrafo identifica que um dado agente
 não está mentindo, qual a probabilidade de ele ser o culpado.
 '''
+
+import random as rn
+
+def resolucao_q238():
+   #Varíaveis Fixas
+   NumeroRepeticoes=1e06
+   Acuracia=0.92
+   FalsoPositivo=0.02
+   #Variáveis mutáveis
+   DetectouMentira=0
+   AchouCulpado=0
+   Nao_DetectouMentira=0
+   Nao_AchouCulpado=0
+   
+   for _ in range(int(NumeroRepeticoes)):
+
+      Culpado=rn.randint(0,29)
+      PegoMentindo=[]
+      
+      for i in range(30): 
+         if i==Culpado:
+            if rn.random()<Acuracia:
+               PegoMentindo.append(i)
+         else:
+            if rn.random()<FalsoPositivo:
+               PegoMentindo.append(i)
+
+      if Culpado in PegoMentindo:
+         DetectouMentira+=1
+         AchouCulpado+=1
+
+      elif PegoMentindo: 
+         DetectouMentira+=1
+
+      else:
+         Nao_DetectouMentira+=1
+         if Culpado==0:
+            Nao_AchouCulpado+=1
+
+   print("a) A probabilidade de um agente mentindo ser o culpado é:", AchouCulpado/DetectouMentira)
+   print("b) A probabilidade de um agente que não está mentindo ser o culpado é:", Nao_AchouCulpado/Nao_DetectouMentira)
+
